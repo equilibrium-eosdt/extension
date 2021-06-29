@@ -55,7 +55,14 @@ export default class Extension {
   }
 
   private accountsCreateHardware ({ accountIndex, address, addressOffset, genesisHash, hardwareType, name }: RequestAccountCreateHardware): boolean {
-    keyring.addHardware(address, hardwareType, { accountIndex, addressOffset, genesisHash, name });
+    let genesis = genesisHash;
+
+    if (genesis.includes(",")) {
+      [genesis] = genesis.split(",");
+      console.log({ genesis })
+    }
+
+    keyring.addHardware(address, hardwareType, { accountIndex, addressOffset, genesisHash: genesis, name });
 
     return true;
   }

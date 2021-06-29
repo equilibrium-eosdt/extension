@@ -51,6 +51,7 @@ function LedgerSign ({ accountIndex, addressOffset, className, error, genesisHas
         .then((signature) => {
           onSignature(signature);
         }).catch((e: Error) => {
+          console.log({ e });
           setError(e.message);
           setIsBusy(false);
         });

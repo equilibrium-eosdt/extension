@@ -1769,10 +1769,42 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ledgerhq/devices@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "@ledgerhq/devices@npm:6.0.2"
+  dependencies:
+    "@ledgerhq/errors": ^6.0.2
+    "@ledgerhq/logs": ^6.0.2
+    rxjs: 6
+    semver: ^7.3.5
+  checksum: 29de27f89caf15a8e1081f939e67a79aac22ddd3661638367396ae11b58d5975664eddcf09e9f76bda8fc9a61bb00ba2e5158f14c64fb1936c33f796bc123049
+  languageName: node
+  linkType: hard
+
 "@ledgerhq/errors@npm:^5.50.0":
   version: 5.50.0
   resolution: "@ledgerhq/errors@npm:5.50.0"
   checksum: 2933e85f5a3768bfb303ba08b759e01f3de9bfc6d1a18b4b0f9353bb16cfbac302a5e6f683867056d3a4d9897ec8c2656c268662338e881df27315936809084d
+  languageName: node
+  linkType: hard
+
+"@ledgerhq/errors@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "@ledgerhq/errors@npm:6.0.2"
+  checksum: b0ce31d6541feaf65cd44f1756b4e9439ba286f445315d5c33f989a6afe13eb3ce2425275e5db36f091cf97840254d92b2b3d7844dd417a19fe579ab45de2a9f
+  languageName: node
+  linkType: hard
+
+"@ledgerhq/hw-transport-http@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "@ledgerhq/hw-transport-http@npm:6.0.2"
+  dependencies:
+    "@ledgerhq/errors": ^6.0.2
+    "@ledgerhq/hw-transport": ^6.0.2
+    "@ledgerhq/logs": ^6.0.2
+    axios: ^0.21.1
+    ws: 7
+  checksum: 97130b3f7d707ef5a68aef51a78dba6acb2a941ddb1033dcc42413737de6ec2d5dbc955e8684e200fdccd0322b07b9ed3f95e8c5fbcad95a5072c45ad1c3204c
   languageName: node
   linkType: hard
 
@@ -1840,10 +1872,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ledgerhq/hw-transport@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "@ledgerhq/hw-transport@npm:6.0.2"
+  dependencies:
+    "@ledgerhq/devices": ^6.0.2
+    "@ledgerhq/errors": ^6.0.2
+    events: ^3.3.0
+  checksum: 6d79a025f6cd35af4bebedaf5ee4699f4eb7067a5e01f8dca7b7b44f51180ed361ebe5ab9f166c47c8ad4071e6e05512ee63ccd1d8c9c46cea2a69616751fe90
+  languageName: node
+  linkType: hard
+
 "@ledgerhq/logs@npm:^5.50.0":
   version: 5.50.0
   resolution: "@ledgerhq/logs@npm:5.50.0"
   checksum: ad2e2f0f52ef2c921ccd19e4e65911d661fe625880f9358dc7cde5375d2a3fbc30bc0af6f1d219887878366e814e05b5008e924bfcabf35880c927909dd20b83
+  languageName: node
+  linkType: hard
+
+"@ledgerhq/logs@npm:^6.0.2":
+  version: 6.0.2
+  resolution: "@ledgerhq/logs@npm:6.0.2"
+  checksum: 0d526189c36efe1f4b61cdaec01380c529d96e38265fad2ff0d0a640a3198271ccd9e89e77affd25453a0a41bcee7112cc642f3f3b1327eeb43a78d2560f10d6
   languageName: node
   linkType: hard
 
@@ -2209,6 +2259,7 @@ __metadata:
     "@fortawesome/free-regular-svg-icons": ^5.15.3
     "@fortawesome/free-solid-svg-icons": ^5.15.3
     "@fortawesome/react-fontawesome": ^0.1.14
+    "@ledgerhq/hw-transport-http": ^6.0.2
     "@polkadot/extension-base": ^0.38.7-1
     "@polkadot/extension-dapp": ^0.38.7-1
     "@polkadot/extension-inject": ^0.38.7-1
@@ -2223,6 +2274,7 @@ __metadata:
     "@types/enzyme": ^3.10.8
     "@types/enzyme-adapter-react-16": ^1.0.6
     "@types/file-saver": ^2.0.2
+    "@types/ledgerhq__hw-transport": ^4.21.3
     "@types/react-copy-to-clipboard": ^5.0.0
     "@types/react-dom": ^17.0.8
     "@types/react-router": ^5.1.15
@@ -2982,6 +3034,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: ee0d098693bf4af44be756eed02daf95f5d0fd4b5b02da952a5952e08842baddf6a986a9ea5f9e460729782f1a0a47848c892ad96ea188b66a363feb49a1536f
+  languageName: node
+  linkType: hard
+
+"@types/ledgerhq__hw-transport@npm:^4.21.3":
+  version: 4.21.3
+  resolution: "@types/ledgerhq__hw-transport@npm:4.21.3"
+  dependencies:
+    "@types/node": "*"
+  checksum: 1f64b4bc4982bc5af80244b10d83ff0ccca7ab40a62464a807066f9f8ceede7489b824da5973e4eccb13261e36e0ceba230d1b3d376eba15b9c07ca76f97fd03
   languageName: node
   linkType: hard
 
@@ -4167,6 +4228,15 @@ __metadata:
   version: 1.11.0
   resolution: "aws4@npm:1.11.0"
   checksum: 5a00d045fd0385926d20ebebcfba5ec79d4482fe706f63c27b324d489a04c68edb0db99ed991e19eda09cb8c97dc2452059a34d97545cebf591d7a2b5a10999f
+  languageName: node
+  linkType: hard
+
+"axios@npm:^0.21.1":
+  version: 0.21.1
+  resolution: "axios@npm:0.21.1"
+  dependencies:
+    follow-redirects: ^1.10.0
+  checksum: c87915fa0b18c15c63350112b6b3563a3e2ae524d7707de0a73d2e065e0d30c5d3da8563037bc29d4cc1b7424b5a350cb7274fa52525c6c04a615fe561c6ab11
   languageName: node
   linkType: hard
 
@@ -7965,6 +8035,16 @@ __metadata:
     inherits: ^2.0.3
     readable-stream: ^2.3.6
   checksum: 42e07747f83bcd4e799da802e621d6039787749ffd41f5517f8c4f786ee967e31ba32b09f8b28a9c6f67bd4f5346772e604202df350e8d99f4141771bae31279
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:^1.10.0":
+  version: 1.14.1
+  resolution: "follow-redirects@npm:1.14.1"
+  peerDependenciesMeta:
+    debug:
+      optional: true
+  checksum: 7381a55bdc6951c5c1ab73a8da99d9fa4c0496ce72dba92cd2ac2babe0e3ebde9b81c5bca889498ad95984bc773d713284ca2bb17f1b1e1416e5f6531e39a488
   languageName: node
   linkType: hard
 
@@ -15949,6 +16029,21 @@ resolve@^2.0.0-next.3:
     sort-keys: ^4.0.0
     write-file-atomic: ^3.0.0
   checksum: 33908c591923dc273e6574e7c0e2df157acfcf498e3a87c5615ced006a465c4058877df6abce6fc1acd2844fa3cf4518ace4a34d5d82ab28bcf896317ba1db6f
+  languageName: node
+  linkType: hard
+
+"ws@npm:7":
+  version: 7.5.1
+  resolution: "ws@npm:7.5.1"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ^5.0.2
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: b9da1b5dc8cd57725453b7f2305e39e21ddcfb5d908cc8ae8b12112b955f50d0d4921009f0f9d587000b0c72cb3748db329b3ddbd98e86829ffcf7b9700a58bf
   languageName: node
   linkType: hard
 

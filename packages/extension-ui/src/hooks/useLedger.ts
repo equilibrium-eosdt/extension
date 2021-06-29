@@ -9,6 +9,7 @@ import uiSettings from '@polkadot/ui-settings';
 import { assert } from '@polkadot/util';
 
 import ledgerChains from '../util/legerChains';
+import { LedgerHttp } from "./ledger-http";
 import useTranslation from './useTranslation';
 
 interface StateBase {
@@ -29,7 +30,43 @@ interface State extends StateBase {
 }
 
 function getNetwork (genesis: string): Network | undefined {
-  return ledgerChains.find(({ genesisHash }) => genesisHash[0] === genesis);
+  const defaultChain = ledgerChains.find(({ genesisHash }) => genesisHash[0] === genesis);
+
+  if (!defaultChain) {
+    const keys = window.localStorage.getItem("customNetCount");
+    let netCount = Number(keys);
+    netCount = Number.isFinite(netCount) ? netCount : 0;
+
+    for (let i = 0; i < netCount; ++i) {
+      const net = window.localStorage.getItem(`customNet${i}`);
+
+      if (net) {
+        const [gen, name, lgType] = net.split(",");
+
+        if (gen === genesis) {
+          return {
+            genesisHash: [gen],
+            displayName: name,
+            network: name,
+            hasLedgerSupport: true,
+            decimals: null,
+            prefix: 42,
+            standardAccount: null,
+            symbols: null,
+            website: null,
+            icon: "polkadot",
+            isIgnored: false,
+            // @ts-ignore
+            isHttp: lgType === "http"
+          };
+        }
+      }
+    }
+
+    return undefined;
+  } else {
+    return defaultChain;
+  }
 }
 
 function retrieveLedger (genesis: string): Ledger {
@@ -41,11 +78,44 @@ function retrieveLedger (genesis: string): Ledger {
 
   const def = getNetwork(genesis);
 
-  assert(def, `Unable to find supported chain for ${genesis}`);
+  if (!def && genesis.split(",").length >= 3) {
+    const [, net, lgType] = genesis.split(",");
+    const keys = window.localStorage.getItem("customNetCount");
+    let netCount = Number(keys);
+    netCount = Number.isFinite(netCount) ? netCount : 0;
+    let found = false;
 
-  ledger = new Ledger('webusb', def.network);
+    for (let i = 0; i < netCount; ++i) {
+      const net = window.localStorage.getItem(`customNet${i}`);
 
-  return ledger;
+      if (net === genesis) {
+        found = true;
+      }
+    }
+
+    if (!found) {
+      window.localStorage.setItem(`customNet${netCount}`, genesis);
+      window.localStorage.setItem("customNetCount", (netCount + 1).toString());
+    }
+
+    if (lgType !== "http") {
+      return new Ledger("webusb", net)
+    } else {
+      return new LedgerHttp("webusb", net) as unknown as Ledger;
+    }
+
+  } else {
+    assert(def, `Unable to find supported chain for ${genesis}`);
+
+    // @ts-ignore
+    if (def.isHttp) {
+      return new LedgerHttp("webusb", def.network) as unknown as Ledger;
+    } else {
+      ledger = new Ledger('webusb', def.network);
+    }
+
+    return ledger;
+  }
 }
 
 function getState (): StateBase {

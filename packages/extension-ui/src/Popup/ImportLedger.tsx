@@ -3,12 +3,12 @@
 
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import settings from '@polkadot/ui-settings';
 
-import { ActionContext, Address, Button, ButtonArea, Dropdown, VerticalSpace, Warning } from '../components';
+import { ActionContext, Address, Button, ButtonArea, Dropdown, InputWithLabel, VerticalSpace, Warning } from '../components';
 import { useLedger } from '../hooks/useLedger';
 import useTranslation from '../hooks/useTranslation';
 import { createAccountHardware } from '../messaging';
@@ -38,7 +38,9 @@ function ImportLedger ({ className }: Props): React.ReactElement {
   const [addressOffset, setAddressOffset] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
   const [isBusy, setIsBusy] = useState(false);
-  const [genesis, setGenesis] = useState<string | null>(null);
+  const [rawGenesis, setGenesis] = useState<string | null>(null);
+  const [custom, setCustom] = useState<string>();
+  const genesis = useMemo(() => rawGenesis?.toUpperCase().includes("#CUSTOM#") ? custom : rawGenesis, [custom, rawGenesis]);
   const onAction = useContext(ActionContext);
   const [name, setName] = useState<string | null>(null);
   const { address, error: ledgerError, isLoading: ledgerLoading, isLocked: ledgerLocked, refresh, warning: ledgerWarning } = useLedger(genesis, accountIndex, addressOffset);
@@ -59,6 +61,27 @@ function ImportLedger ({ className }: Props): React.ReactElement {
     value
   })));
 
+  const customNetworkOps = useMemo(() => {
+    const keys = window.localStorage.getItem("customNetCount");
+    const netCount = Number(keys);
+
+    if (!keys || !Number.isFinite(netCount)) {
+      return [];
+    }
+
+    const nets = [];
+
+    for (let i = 0; i < netCount; ++i) {
+      const net = window.localStorage.getItem(`customNet${i}`);
+
+      if (net) {
+        nets.push({ text: net, value: net });
+      }
+    }
+
+    return nets;
+  }, [])
+
   const networkOps = useRef(
     [{
       text: t('Select network'),
@@ -67,7 +90,11 @@ function ImportLedger ({ className }: Props): React.ReactElement {
     ...ledgerChains.map(({ displayName, genesisHash }): NetworkOption => ({
       text: displayName,
       value: genesisHash[0]
-    }))]
+    })),
+    ...customNetworkOps, {
+      text: t('Custom'),
+      value: "#CUSTOM#"
+    }]
   );
 
   const _onSave = useCallback(
@@ -113,6 +140,7 @@ function ImportLedger ({ className }: Props): React.ReactElement {
           options={networkOps.current}
           value={genesis}
         />
+        <InputWithLabel label="Custom Genesis" defaultValue="" value={custom} onChange={setCustom}/>
         { !!genesis && !!address && !ledgerError && (
           <Name
             onChange={setName}
